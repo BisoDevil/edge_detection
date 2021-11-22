@@ -31,20 +31,35 @@ class HomeViewController: UIViewController, CameraScannerViewOutputDelegate, Ima
             }
             
             // Temp fix for https://github.com/WeTransfer/WeScan/issues/320
-            if #available(iOS 15, *) {
+           // Temp fix for https://github.com/WeTransfer/WeScan/issues/320
+            if #available(iOS 13, *) {
                 let appearance = UINavigationBarAppearance()
-                let navigationBar = UINavigationBar()
+                let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 appearance.configureWithOpaqueBackground()
-                appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label]
-                appearance.backgroundColor = .systemBackground
-                navigationBar.standardAppearance = appearance;
+                appearance.titleTextAttributes = textAttributes
+                appearance.backgroundColor = .black
+                appearance.buttonAppearance.normal.titleTextAttributes = textAttributes
+                appearance.doneButtonAppearance.normal.titleTextAttributes = textAttributes
+                UINavigationBar.appearance().standardAppearance = appearance
                 UINavigationBar.appearance().scrollEdgeAppearance = appearance
                 
                 let appearanceTB = UITabBarAppearance()
                 appearanceTB.configureWithOpaqueBackground()
-                appearanceTB.backgroundColor = .systemBackground
+                appearanceTB.backgroundColor = .black
+                
                 UITabBar.appearance().standardAppearance = appearanceTB
-                UITabBar.appearance().scrollEdgeAppearance = appearanceTB
+                if #available(iOS 15.0, *) {
+                    UITabBar.appearance().scrollEdgeAppearance = appearanceTB
+                }
+                
+                let toolBarAppearance = UIToolbarAppearance()
+                toolBarAppearance.configureWithOpaqueBackground()
+                toolBarAppearance.backgroundColor = .black
+                toolBarAppearance.buttonAppearance.normal.titleTextAttributes = textAttributes
+                UIToolbar.appearance().standardAppearance = toolBarAppearance
+                if #available(iOS 15.0, *) {
+                    UIToolbar.appearance().scrollEdgeAppearance = toolBarAppearance
+                } 
             }
             
             present(cameraController, animated: true) {
